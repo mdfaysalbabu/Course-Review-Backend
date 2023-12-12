@@ -2,16 +2,16 @@ import { Response } from 'express';
 
 type TSuccessResponse<T> = {
   statusCode: number;
-  message: string;
+  message?: string;
   success: boolean;
   data: T | T[] | null;
 };
 
-//jei data ashbe shei datar type
 const sendSuccessResponse = <T>(res: Response, data: TSuccessResponse<T>) => {
   res.status(data.statusCode).json({
-    status: 'success',
+    status: data.success,
     message: data.message,
+    statusCode: data.statusCode,
     data: data.data,
   });
 };
