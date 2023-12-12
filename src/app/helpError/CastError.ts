@@ -1,19 +1,14 @@
 import mongoose from 'mongoose';
-import { TErrorIssue, TErrorResponse } from '../types/errorResponse';
+import { TErrorResponse } from '../types/errorResponse';
 
 const handlerCastError = (err: mongoose.Error.CastError): TErrorResponse => {
-  const issues: TErrorIssue[] = [
-    {
-      path: err.path,
-      message: err.message,
-    },
-  ];
-
+  const errorMessage = `${err.value} is not a valid ID!`;
+  const statusCode = 400;
   return {
-    statusCode: 400,
-    status: 'error',
-    message: 'Cast Error',
-    issues,
+    statusCode,
+    message: 'Invalid ID',
+    errorMessage,
+    errorDetails: err,
   };
 };
 

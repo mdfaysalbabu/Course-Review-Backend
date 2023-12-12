@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export type TErrorResponse = {
   statusCode: number;
-  status: 'error' | 'fail';
   message: string;
-  issues: TErrorIssue[];
+  errorMessage: string;
+  errorDetails: any;
 };
 
 export type TErrorIssue = {
