@@ -6,6 +6,7 @@ import cors from 'cors';
 import notFound from './app/middlewear/notFound';
 import router from './app/routes';
 import globalErrorHandler from './app/middlewear/globalErrorHandler';
+import config from './app/config';
 
 // application routes
 const app: Application = express();
@@ -16,11 +17,9 @@ app.use(cors());
 
 app.use('/api', router);
 
-const test = async (req: Request, res: Response) => {
-  res.send('Hello World!');
-};
-
-app.get('/', test);
+app.get('/', (req: Request, res: Response) => {
+  res.send(`Server Running on port ${config.port}`);
+});
 
 app.use(globalErrorHandler);
 app.use(notFound);
