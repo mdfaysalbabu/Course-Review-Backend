@@ -67,7 +67,14 @@ const getAllCourse = async (query: QueryObj) => {
 // courses update and use transaction
 
 const updateCourse = async (id: string, payload: Partial<TCourse>) => {
-  const { tags, details, ...remainingField } = payload;
+  const {
+    tags,
+    details,
+    startDate,
+    endDate,
+    durationInWeeks,
+    ...remainingField
+  } = payload;
 
   const session = await mongoose.startSession();
 
@@ -77,6 +84,29 @@ const updateCourse = async (id: string, payload: Partial<TCourse>) => {
     const modifiedData: Record<string, unknown> = {
       ...remainingField,
     };
+
+    if (durationInWeeks) {
+      throw new AppError(
+        httpStatus.BAD_REQUEST,
+        'Failed to update DurationWeeks in course',
+      );
+    }
+
+    const dateToWeeks = (startDate: string, endDate: string) => {
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      const timeLaps = end.getTime() - start.getTime();
+      const dayDivided = timeLaps / (1000 * 3600 * 24);
+      const weeks = Math.ceil(dayDivided / 7);
+      return weeks;
+    };
+
+    if (payload.startDate && payload.endDate) {
+      modifiedData.durationInWeeks = dateToWeeks(
+        payload.startDate as string,
+        payload.endDate as string,
+      );
+    }
 
     if (details && Object.keys(details).length) {
       for (const [key, value] of Object.entries(details)) {
