@@ -1,7 +1,12 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import app from './app';
 import config from './app/config';
 
 import mongoose from 'mongoose';
+import { Server } from 'http';
+
+let server: Server;
 
 async function main() {
   try {

@@ -29,6 +29,23 @@ const getAllCourse = async (query: QueryObj) => {
     level,
   } = query;
 
+  // const sort: Record<string, 1 | -1> = {};
+  // if (
+  //   sortBy &&
+  //   [
+  //     'title',
+  //     'price',
+  //     'startDate',
+  //     'endDate',
+  //     'language',
+  //     'duration',
+  //   ].includes(sortBy)
+  // ) {
+  //   sort[sortBy] = sortOrder === 'desc' ? -1 : 1;
+  // }
+
+  // filtering all
+
   const filter: Record<string, any> = {};
 
   if (minPrice !== undefined || maxPrice !== undefined) {
@@ -47,7 +64,7 @@ const getAllCourse = async (query: QueryObj) => {
 
   if (durationInWeeks !== undefined) filter.durationInWeeks = durationInWeeks;
 
-  if (level) filter['details.level'] = level;
+  if (level) filter['details.level'] = { $regex: new RegExp(level, 'i') };
 
   const result = await Course.find(filter)
     .sort({ [sortBy]: sortOrder === 'desc' ? -1 : 1 })
@@ -56,6 +73,8 @@ const getAllCourse = async (query: QueryObj) => {
 
   return result;
 };
+
+// courses update and use transaction
 
 const updateCourse = async (id: string, payload: Partial<TCourse>) => {
   const { tags, details, ...remainingField } = payload;
@@ -145,6 +164,8 @@ const getCourseIdReview = async (id: string) => {
 
   return { allCourse, allReview };
 };
+
+// get best courses use lookup
 
 const getBestCourse = async () => {
   const bestCourse = await Course.aggregate([

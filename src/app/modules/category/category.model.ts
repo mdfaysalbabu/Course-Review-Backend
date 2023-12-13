@@ -1,4 +1,4 @@
-import mongoose, { Schema, model } from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import { TCategory } from './category.interface';
 
 const categorySchema = new Schema<TCategory>({

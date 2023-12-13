@@ -63,6 +63,7 @@ const courseSchema = new Schema<TCourse>({
   },
 });
 
+// startDate endDate ceil
 courseSchema.pre('save', function (next) {
   if (!this.durationInWeeks) {
     const startDate = new Date(this.startDate);

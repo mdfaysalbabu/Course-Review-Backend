@@ -1,16 +1,13 @@
 export type QueryObj = {
-  [key: string]: unknown;
-  page?: string;
-  limit?: string;
-  searchTerm?: string;
-  fields?: string;
+  page?: number;
+  limit?: number;
   sortBy?: string;
   sortOrder?: 'asc' | 'desc';
   minPrice?: number;
   maxPrice?: number;
   tags?: string;
   startDate?: Date;
-  endDate?: string;
+  endDate?: Date;
   language?: string;
   provider?: string;
   durationInWeeks?: number;
