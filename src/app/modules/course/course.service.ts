@@ -14,8 +14,8 @@ const createCourseIntoDB = async (payload: TCourse) => {
 
 const getAllCourse = async (query: QueryObj) => {
   const {
-    page = 1,
-    limit = 10,
+    page,
+    limit,
     sortBy = 'startDate',
     sortOrder = 'asc',
     minPrice,
@@ -28,6 +28,9 @@ const getAllCourse = async (query: QueryObj) => {
     durationInWeeks,
     level,
   } = query;
+
+  const defaultPage = Number(page) || 1;
+  const defaultLimit = Number(limit) || 10;
 
   // filtering all
 
@@ -51,21 +54,14 @@ const getAllCourse = async (query: QueryObj) => {
 
   if (level) filter['details.level'] = { $regex: new RegExp(level, 'i') };
 
-  const defaultPage = (page - 1) * limit;
+  const defaultPages = (defaultPage - 1) * defaultLimit;
 
   const courses = await Course.find(filter)
     .sort({ [sortBy]: sortOrder === 'desc' ? -1 : 1 })
-    .skip(defaultPage)
-    .limit(limit);
+    .skip(defaultPages)
+    .limit(defaultLimit);
 
-  const count = await Course.find().countDocuments();
-
-  const meta = {
-    page: defaultPage,
-    limit: limit,
-    total: count,
-  };
-  return { meta, courses };
+  return courses;
 };
 
 // courses update and use transaction
