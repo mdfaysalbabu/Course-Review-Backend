@@ -11,8 +11,8 @@ router.post(
   CourseControllers.createCourse,
 );
 router.get('/courses', CourseControllers.getAllCourse);
-router.get('/courses/:id/reviews', CourseControllers.getCourseIdReview);
 router.put('/courses/:id', CourseControllers.updateCourse);
+router.get('/courses/:id/reviews', CourseControllers.getCourseIdReview);
 router.get('/course/best', CourseControllers.getBestCourse);
 
 export const CourseRouter = router;
