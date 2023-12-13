@@ -20,7 +20,7 @@
 * error handling cast error and validation error 
 
 ## Live Link
-[]
+[https://lb-assignment-3.vercel.app]
 
 ## Project Description Video Link
 [https://drive.google.com/file/d/1ylhqznkKETl-zkrN_0Be65joGE280Rh5/view?usp=sharing]
