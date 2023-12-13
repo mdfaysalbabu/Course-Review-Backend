@@ -2,7 +2,7 @@ export type QueryObj = {
   page?: number;
   limit?: number;
   sortBy?: string;
-  sortOrder?: 'asc' | 'desc';
+  sortOrder?: "asc"|"desc";
   minPrice?: number;
   maxPrice?: number;
   tags?: string;

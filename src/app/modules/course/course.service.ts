@@ -29,21 +29,6 @@ const getAllCourse = async (query: QueryObj) => {
     level,
   } = query;
 
-  // const sort: Record<string, 1 | -1> = {};
-  // if (
-  //   sortBy &&
-  //   [
-  //     'title',
-  //     'price',
-  //     'startDate',
-  //     'endDate',
-  //     'language',
-  //     'duration',
-  //   ].includes(sortBy)
-  // ) {
-  //   sort[sortBy] = sortOrder === 'desc' ? -1 : 1;
-  // }
-
   // filtering all
 
   const filter: Record<string, any> = {};
@@ -66,12 +51,21 @@ const getAllCourse = async (query: QueryObj) => {
 
   if (level) filter['details.level'] = { $regex: new RegExp(level, 'i') };
 
-  const result = await Course.find(filter)
+  const defaultPage = (page - 1) * limit;
+
+  const courses = await Course.find(filter)
     .sort({ [sortBy]: sortOrder === 'desc' ? -1 : 1 })
-    .skip((page - 1) * limit)
+    .skip(defaultPage)
     .limit(limit);
 
-  return result;
+  const count = await Course.find().countDocuments();
+
+  const meta = {
+    page: defaultPage,
+    limit: limit,
+    total: count,
+  };
+  return { meta, courses };
 };
 
 // courses update and use transaction
