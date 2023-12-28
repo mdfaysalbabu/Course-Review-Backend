@@ -1,4 +1,4 @@
-# Assignment-3
+# Courses Reviews backend
 ## Locally run : npm run start:dev
 * Open the project in vs code and create a file named .env in the root of the folder.
 * open the command prompt on the project path or terminal on the vs code by pressing ctrl+
